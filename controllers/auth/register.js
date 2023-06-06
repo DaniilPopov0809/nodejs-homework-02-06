@@ -16,10 +16,11 @@ const register = async (req, res) => {
 
   const newUser = await User.create({ ...req.body, password: hashPasword });
 
-  res.status(201).json({
-    name: newUser.name,
-    email: newUser.email,
-  });
+  const response = {
+    user: { email: newUser.email, subscription: newUser.subscription },
+  };
+
+  res.status(201).json(response);
 };
 
 module.exports = register;
