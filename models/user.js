@@ -29,6 +29,12 @@ const userSchema = new Schema(
     token: {
       type: String,
       minlength: 6,
+      default: null
+    },
+    subscription: {
+      type: String,
+      enum: ["starter", "pro", "business"],
+      default: "starter"
     },
   },
   { versionKey: false, timestamps: true }
