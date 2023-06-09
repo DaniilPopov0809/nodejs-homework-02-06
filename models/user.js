@@ -3,11 +3,7 @@ const handleMongooseError = require("../utils/handleMongooseError");
 
 const Joi = require("joi");
 
-const emailRegexp =
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-
-const passRegexp =
-  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()])[\w!@#$%^&*()]{8,}$/;
+const { emailRegexp, passRegexp, subscriptionData } = require("../constants/constants");
 
 const userSchema = new Schema(
   {
@@ -23,18 +19,18 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      minlength: 6,
+      minlength: 8,
       required: [true, "Password is required"],
     },
     token: {
       type: String,
       minlength: 6,
-      default: null
+      default: null,
     },
     subscription: {
       type: String,
-      enum: ["starter", "pro", "business"],
-      default: "starter"
+      enum: subscriptionData,
+      default: "starter",
     },
   },
   { versionKey: false, timestamps: true }
