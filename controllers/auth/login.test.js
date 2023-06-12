@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
 
-mongoose.set("strictQuery", false);
-
 require("dotenv").config();
 const { PORT, DB_HOST, EMAIL_TEST, PASSWORD_TEST } = process.env;
 
