@@ -3,7 +3,11 @@ const handleMongooseError = require("../utils/handleMongooseError");
 
 const Joi = require("joi");
 
-const { emailRegexp, passRegexp, subscriptionData } = require("../constants/constants");
+const {
+  emailRegexp,
+  passRegexp,
+  subscriptionData,
+} = require("../constants/constants");
 
 const userSchema = new Schema(
   {
@@ -36,6 +40,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -53,9 +65,14 @@ const loginSchema = Joi.object({
   password: Joi.string().pattern(passRegexp).required(),
 });
 
+const userEmailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 const schemas = {
   registerSchema,
   loginSchema,
+  userEmailSchema,
 };
 
 const User = model("user", userSchema);
